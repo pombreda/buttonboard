@@ -1,0 +1,63 @@
+
+body
+{
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	font-family: "Helvetica", "Lucida Grande", Verdana, Arial, sans-serif;
+	line-height: 144%;
+	-webkit-text-size-adjust: none;
+
+	min-height: 500px;
+	margin-bottom: 40px;
+	
+	background-color: black;
+}
+
+
+.ButtonBoardArea
+{
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	color: white;
+
+	-webkit-text-size-adjust: none;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+
+.ButtonBoardArea table
+{
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	border-width: 0px;
+	padding: 0px;
+	border-spacing: 0px 0px;
+
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+
+.ButtonBoardArea td
+{
+	padding-right: 2px;
+	padding-left: 2px;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0px;
+	text-align: center;
+
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+
+.ButtonBoardArea img
+{
+	margin-left: 2px;
+	margin-right: 2px;
+	padding-top: 10px;
+
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+
