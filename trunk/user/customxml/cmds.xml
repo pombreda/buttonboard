@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--  
+This is the file to customize, adding your own commands, scripts and icons,
+and customizing the layout
+
+The first list of commmands contains the following elements for each command:
+
+	name:	A unique command name
+
+	label:	The label for the command shown below the icon
+
+	exec:	The script to run on the server.  The actual execution will be done
+				by a separate server script run by the user at startup/login.
+
+	icon:	The icon to display. A good site to check out for making nice iPhone-y icons is:
+				http://www.quirco.com/iPhoneIcon/
+
+	confirm: True if a confirmation dialog is needed
+	
+	output:	True to display script output in a dialog box
+
+Commands added in this custom file will be in addition to the original files
+	
+-->
+
+<bbdata>
+
+
+<cmds>
+<!--
+	<cmd name="foobar">
+		<label>/bin/ls</label>
+		<exec>/bin/ls</exec>
+		<icon>/images/update_comix.png</icon>
+		<output>true</output>
+	</cmd>
+-->
+</cmds>
+
+ 
+<!-- 
+Since the buttons are layed out in lines of 4, they are grouped here that way for
+the sake of clarity.  Please note the use of the special reserved command, "blank", used
+as a space filler on the grid.
+
+Any rows added in this custom file will supplant layout rows in the shipped file
+-->	
+
+<layout>
+<!--
+
+<buttonrow>
+<item n="tv_power" />		<item n="stereo_power" />			<item n="foobar" />				<item n="stereo_vol_up" />
+</buttonrow>
+
+-->
+</layout>
+
+</bbdata>
+
+

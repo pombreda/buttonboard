@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/bin/sudo -u username /usr/bin/osascript <<EOF
+/usr/bin/osascript <<EOF
 
 on run this_script
 	set input_app to  "$1"
