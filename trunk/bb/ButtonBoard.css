@@ -46,10 +46,6 @@ img.badge
 
 .ButtonBoardArea
 {
-/*
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
-*/
-	/*border:solid 1px #CCC;*/
 	border:none;
 	
 
@@ -103,21 +99,19 @@ img.badge
 
 /*	margin-left: 2px;
 	margin-right: 2px;
-	border:none;
 
 padding-top: 10px;
 */	
 
 
+	border:none;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	outline-style: none;
 }
 
 #launcher_stat {
-/*position:absolute;*/
 	display:none;
-
     /*set the div in the center of the screen*/
     /*position:absolute;
     top:50%;
@@ -129,8 +123,4 @@ padding-top: 10px;
 	height:150px;
 	z-index:6;
 
-/*visibility:hidden;*/
-/*border:solid 5px #AAA;*/
-	/*background-color: black;*/
-/*padding:5px;*/
 } 
