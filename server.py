@@ -50,7 +50,7 @@ class Application(tornado.web.Application):
 			debug_print("Running as Mac OSX app bundle")
 			self.setup_mac_files()
 		
-		debug_print("working_folder = " + self.working_folder)
+		print("working_folder = " + self.working_folder)
 
 		self.read_settings_file()
 
@@ -124,7 +124,7 @@ class Application(tornado.web.Application):
 				pass
 				
 		debug_print("The password = ", self.password)
-		debug_print("The port = " , self.port)
+		print "Running on port: " , self.port
 	
 #------------------------
 	# Copy files from app bundle to user L/AS
@@ -365,6 +365,7 @@ def main():
 	theApp = Application()
 	http_server = tornado.httpserver.HTTPServer(theApp)
 	http_server.listen(theApp.port)
+	print "Starting web server..." 
 	tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
