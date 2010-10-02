@@ -16,6 +16,8 @@ from tornado.options import define, options
 import urllib
 from elementtree.ElementTree import parse
 
+from imageresizer import Resizer
+
 define("debug", default=False, help="debug mode", type=bool)
 define("appbundle", default=True, help="indicates if running in Mac OSX app bundle", type=bool)
 define("working_folder", default=os.path.dirname(__file__), help="the folder to look for all the files", type=str)
@@ -40,9 +42,17 @@ class Application(tornado.web.Application):
 	working_folder = options.working_folder
 
 	bb_folder = "bb"
-	image_folder = "images"
-	custom_image_folder = "user/customimages"
-	custom_scripts_folder = "user/customscripts"
+	default_image_folder = "default/images"
+	default_script_folder ="default/scripts"
+	custom_image_folder = "user/images"
+	custom_script_folder = "user/scripts"
+
+	default_cmds_file = "default/cmds.xml"
+	custom_cmds_file = "user/cmds.xml" 
+
+	settings_file = "user/settings.xml"
+
+
 	
 	def __init__(self):
 
@@ -52,6 +62,22 @@ class Application(tornado.web.Application):
 		
 		print("working_folder = " + self.working_folder)
 
+		#the working folder is knowin, just set up all the path strings now
+
+		self.bb_folder_path = os.path.join(self.working_folder, self.bb_folder)
+
+		self.default_image_path = os.path.join(self.working_folder, self.default_image_folder)
+		self.default_script_path = os.path.join(self.working_folder, self.default_script_folder)
+
+		self.custom_image_path = os.path.join(self.working_folder, self.custom_image_folder)
+		self.custom_script_path = os.path.join(self.working_folder, self.custom_script_folder)
+
+		self.custom_cmds_file_path = os.path.join(self.working_folder, self.custom_cmds_file)
+		self.default_cmds_file_path = os.path.join(self.working_folder, self.default_cmds_file)
+
+		self.settings_file_path = os.path.join(self.working_folder, self.settings_file)
+
+
 		self.read_settings_file()
 
 		#pre-load the xml cmd list and layout
@@ -59,13 +85,13 @@ class Application(tornado.web.Application):
 		xml_cmds = []
 		xml_rows = []
 
-		if os.path.exists(os.path.join(self.working_folder, "user/customxml/cmds.xml")):
-			xml_data = parse(os.path.join(self.working_folder, "user/customxml/cmds.xml")).getroot()
+		if os.path.exists(self.custom_cmds_file_path):
+			xml_data = parse(self.custom_cmds_file_path).getroot()
 			xml_cmds.extend(xml_data.findall('cmds/cmd'))
 			xml_rows = xml_data.findall('layout/buttonrow')
 			debug_print( "Adding commands from custom file")
 		
-		xml_data = parse(os.path.join(self.working_folder, "xml/cmds.xml")).getroot()
+		xml_data = parse(self.default_cmds_file_path).getroot()
 		xml_cmds.extend(xml_data.findall('cmds/cmd'))
 
 		#only use the layout from this file if the previous is missing on
@@ -92,13 +118,14 @@ class Application(tornado.web.Application):
 			xsrf_cookies=True,
 			debug=True,
 			login_url = "/login",
-			working_folder = self.working_folder,
 			xml_cmds = xml_cmds,
 			xml_rows = xml_rows,
-			bb_folder = self.bb_folder,
-			image_folder = self.image_folder,
-			custom_image_folder = self.custom_image_folder,
 		)
+		
+		#Resize images to better size for serving.  Preserves the originals
+		#Resizer(self.default_image_path, "originals").resize()
+		Resizer(self.custom_image_path, "originals").resize()
+		
 		tornado.web.Application.__init__(self, handlers, **settings)
 		sys.stdout.flush()
 #------------------------
@@ -108,7 +135,7 @@ class Application(tornado.web.Application):
 		xml_data = None
 		
 		try: 
-			xml_data = parse(os.path.join(self.working_folder, "user/customxml/settings.xml")).getroot()
+			xml_data = parse(self.settings_file_path).getroot()
 		except:
 			debug_print ("Couldn't find or read custom settings file")
 
@@ -159,10 +186,8 @@ class Application(tornado.web.Application):
 		debug_print ("Copying files over from app bundle")
 		self.copyover("bb")
 		self.copyover("static")
-		self.copyover("scripts")
 		self.copyover("templates")
-		self.copyover("images")
-		self.copyover("xml")
+		self.copyover("default")
 		self.copyover("user")
 
 #========================================================
@@ -219,18 +244,19 @@ class MainHandler(BaseHandler):
 
 								tmp = cmd.find("icon")
 								if not tmp == None and not tmp.text.strip() == "":
-									icon = tmp.text
+									icon = self.find_image(tmp.text)
 								else:
 									icon = "/images/buttonboard.png"
 
 								tmp = cmd.find("badge")
 								if not tmp == None and not tmp.text.strip() == "":
-									badge = tmp.text
+									badge = self.find_image(tmp.text)
 								else:
 									badge = None
 
 								elementHTML += "\t\t\t<div class=\"imagescaler\">\n"
 								elementHTML += "\t\t\t\t<img class=\"layer\" src=\"" + icon + "\" />\n"
+								elementHTML += "\t\t\t\t<img class=\"layer\" src=\"images/mask2.png\" />\n"
 								if not badge == None:
 									elementHTML += "\t\t\t\t<img class=\"badge\" src=\"" + badge + "\" />\n"
 								
@@ -258,7 +284,13 @@ class MainHandler(BaseHandler):
 				
 		return table
 
-	
+#------------------------
+	def find_image(self, name):
+		if os.path.exists(os.path.join(self.application.custom_image_path, name)):
+			return "customimages/" + name
+		elif os.path.exists(os.path.join(self.application.default_image_path, name)):
+			return "images/" + name
+		return "images/buttonboard.png"
 
 #========================================================
 class LoginHandler(BaseHandler):
@@ -285,17 +317,22 @@ class LoginHandler(BaseHandler):
 class CmdHandler(BaseHandler):
 	@tornado.web.authenticated
 	def get(self, cmd):
+		status = "Done"
 		word_list = self.get_cmd_script_and_args(cmd)
 		debug_print(word_list)
 		if len(word_list) > 0 :
-			working_folder = self.application.settings["working_folder"]
-			script_with_path = os.path.join(working_folder, word_list[0])
-			word_list[0] = script_with_path
-			cmd_output = Popen(word_list, stdout=PIPE).communicate()[0]
+			script_with_path = self.find_file(word_list[0])
+			if (script_with_path):
+				word_list[0] = script_with_path
+				cmd_output = Popen(word_list, stdout=PIPE).communicate()[0]
+			else:
+				status = "Fail"
+				cmd_output = "Executable not found"
 		else:
+			status = "Fail"
 			cmd_output = "Command not found"
 		debug_print (cmd_output)
-		self.write( "Done: \n" + cmd_output )
+		self.write( status + "::" + cmd_output )
 		sys.stdout.flush()
 #------------------------
 	def get_cmd_script_and_args(self, cmd):
@@ -309,12 +346,25 @@ class CmdHandler(BaseHandler):
 				if not script_item == None:
 					word_list.append(script_item.text.strip())
 					
-					for param_item in script_item.findall('param'):
+					for param_item in item.findall('param'):
 						word_list.append(param_item.text.strip())	
 				
 				return word_list
 
 		return word_list
+#------------------------
+	def find_file(self, name):
+		#if file name is absolute just use that:
+		if os.path.isabs(name):
+			return name
+		if os.path.exists(os.path.join(self.application.custom_script_path, name)):
+			return os.path.join(self.application.custom_script_path, name)
+		elif os.path.exists(os.path.join(self.application.default_script_path, name)):
+			return os.path.join(self.application.default_script_path, name)
+		return None 
+
+		
+
 
 #========================================================
 		
@@ -334,8 +384,7 @@ class ButtonBoardStaticFileHandler(AuthStaticFileHandler):
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
-		working_folder = application.settings["working_folder"]
-		self.root = os.path.abspath(os.path.join(working_folder, application.settings["bb_folder"]))
+		self.root = os.path.abspath(application.bb_folder_path)
 
 #========================================================
 		
@@ -343,8 +392,7 @@ class ImageStaticFileHandler(AuthStaticFileHandler):
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
-		working_folder = application.settings["working_folder"]
-		self.root = os.path.abspath(os.path.join(working_folder, application.settings["image_folder"]))
+		self.root = os.path.abspath(application.default_image_path)
 
 
 #========================================================
@@ -353,10 +401,7 @@ class CustomImageStaticFileHandler(AuthStaticFileHandler):
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
-		working_folder = application.settings["working_folder"]
-		self.root = os.path.abspath(os.path.join(working_folder, application.settings["custom_image_folder"]))
-
-
+		self.root = os.path.abspath(application.custom_image_path)
 
 
 #========================================================

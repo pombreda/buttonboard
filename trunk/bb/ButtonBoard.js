@@ -53,9 +53,11 @@ function run_cmd(cmd, conf, output)
 					}
 					else
 					{
-						if (output == "true")
+						// parse out buttonboard status header
+						items = http_cmd.responseText.split("::", 2);
+						if (output == "true" || items[0] == "Fail")
 						{
-							alert(http_cmd.responseText);
+							alert(items[1]);
 						}
 					}
 					
