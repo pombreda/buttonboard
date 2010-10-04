@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <!--  
+
+**************
 This is the file to customize, adding your own commands, scripts and icons,
-and customizing the layout
+and customizing the layout  See the version under the default folder as a reference
+**************
 
-The first list of commmands contains the following elements for each command:
+The list of commmands contains the following elements for each command:
 
-	name:	A unique command name
+	name:	A unique command name.  Required attribute.
 
-	label:	The label for the command shown below the icon
+	label:	The label for the command shown below the icon.  If not defined, the 
+			name will be used.
 
-	exec:	The script to run on the server.  The actual execution will be done
-				by a separate server script run by the user at startup/login.
+	exec:	The script or program to run on the server. Can possibly point to an 
+			absolute path on the system (i.e. "/bin/ls").  If not absolute path name,
+			it will be searched for first in "user/scripts", then "default/scripts"
 
-	icon:	The icon to display.
+	param:  There can be zero or more or parameters for the script or program.
 
-	confirm: True if a confirmation dialog is needed
+	icon:	The icon to display.  If not specified, a default "button" icon will be used.
+			The filename given will first be searched for in "user/images" and then in
+			"default/images".  Icons are best if square and size of 128x128 or greater
+
+	badge:	The badge is second icon to be displayed in the lower right corner of the main
+			icon.  Optional. Filename search is same as icon
+
+	confirm: True if a confirmation dialog is needed.  Default is false if not defined.
 	
-	output:	True to display script output in a dialog box
+	output:	True to display command execution output in a dialog box.  Default is false 
+			if not defined.
 
-Commands added in this custom file will be in addition to the original files
+Some examples:
+			
+Use the default icon, and show the output of the command "/bin/echo Hello There": 
 	
--->
-
-<bbdata>
-
-
-<cmds>
 	<cmd name="foobar">
 		<label>FooBar</label>
 		<exec>/bin/echo</exec>
@@ -34,8 +43,37 @@ Commands added in this custom file will be in addition to the original files
 		<param>There</param>
 		<output>true</output>
 	</cmd>
-	<cmd name="foobar2">
+			
+Display missile icon, badged with nuclear symbol, and run custom script 
+"launch_nukes.sh" with confirmation:
+	
+	<cmd name="launch_nukes">
+		<label>Missle Strike</label>
+		<exec>launch_nukes.sh</exec>
+		<icon>missile.png</icon>
+		<badge>nuclear.png</badge>
+		<confirm>true</confirm>
 	</cmd>
+
+Rewind playback of Plex client using custom script:
+	
+	<cmd name="rewind_plex">
+		<label>Plex Rewind</label>
+		<exec>plex_rewind.sh</exec>
+		<icon>plex.png</icon>
+		<badge>left-red.png</badge>
+	</cmd>
+
+			
+-->
+
+<bbdata>
+
+
+<cmds>
+
+<!---  add custom commands here -->
+
 </cmds>
 
  
@@ -44,7 +82,7 @@ Since the buttons are layed out in lines of 4, they are grouped here that way fo
 the sake of clarity.  Please note the use of the special reserved command, "blank", used
 as a space filler on the grid.
 
-Any rows added in this custom file will supplant layout rows in the shipped file
+If any buttonrows are defined in this file, this buttonrows in the default version are ignored
 -->	
 
 <!--
@@ -64,9 +102,11 @@ Any rows added in this custom file will supplant layout rows in the shipped file
 <buttonrow>
 <item n="restart_trans" />	<item n="update_comix" />			<item n="rescan_plex" />		<item n="blank" />
 </buttonrow>
+<!--
 <buttonrow>
-<item n="foobar2" />	
+<item n="foobar" />	
 </buttonrow>
+-->
 </layout>
 
 </bbdata>

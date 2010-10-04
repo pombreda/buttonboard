@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <!--  
-This is the default file to define commands, scripts and icons,
-and customizing the layout
+**************
+This is the default file to define commands, scripts and icons.  Use this a reference,
+modifying the version in the "user" folder
+**************
+
 
 The list of commmands contains the following elements for each command:
 
-	name:	A unique command name
+	name:	A unique command name.  Required attribute.
 
-	label:	The label for the command shown below the icon
+	label:	The label for the command shown below the icon.  If not defined, the 
+			name will be used.
 
 	exec:	The script or program to run on the server. Can possibly point to an 
-			absolute path on the system (i.e. "/bin/ls").  
+			absolute path on the system (i.e. "/bin/ls").  If not absolute path name,
+			it will be searched for first in "user/scripts", then "default/scripts"
 
-	param:  There can be zero or any number or parameters for the script or program
+	param:  There can be zero or more or parameters for the script or program.
 
-	icon:	The icon to display.
+	icon:	The icon to display.  If not specified, a default "button" icon will be used.
+			The filename given will first be searched for in "user/images" and then in
+			"default/images".  Icons are best if square and size of 128x128 or greater
 
-	badge:	The badge is second icon to be displayed in the lower right corner of the main icon
+	badge:	The badge is second icon to be displayed in the lower right corner of the main
+			icon.  Optional. Filename search is same as icon
 
-	confirm: True if a confirmation dialog is needed
+	confirm: True if a confirmation dialog is needed.  Default is false if not defined.
 	
-	output:	True to display command output in a dialog box
+	output:	True to display command execution output in a dialog box.  Default is false 
+			if not defined.
 
 -->
 
@@ -131,6 +140,8 @@ The list of commmands contains the following elements for each command:
 Since the buttons are layed out in lines of 4, they are grouped here that way for
 the sake of clarity.  Please note the use of the special reserved command, "blank", used
 as a space filler on the grid.
+
+If any buttonrows are defined in the user version of this file, this will be ignored.
 -->	
 
 <layout>
