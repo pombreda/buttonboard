@@ -3,7 +3,7 @@ body
 {
 	margin: 0px;
 	padding: 0px;
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 144%;
 	-webkit-text-size-adjust: none;
 
@@ -20,6 +20,8 @@ body
 	z-index:0;
 	width: 60px;
 	height: 60px;
+	display: block;
+	margin: auto;
 }
 
 
