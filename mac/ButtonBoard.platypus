@@ -11,12 +11,11 @@
 	<key>BundledFiles</key>
 	<array>
 		<string>/Users/tony/Dropbox/buttonboard/bb</string>
-		<string>/Users/tony/Dropbox/buttonboard/scripts</string>
 		<string>/Users/tony/Dropbox/buttonboard/static</string>
 		<string>/Users/tony/Dropbox/buttonboard/templates</string>
 		<string>/Users/tony/Dropbox/buttonboard/user</string>
-		<string>/Users/tony/Dropbox/buttonboard/xml</string>
-		<string>/Users/tony/Dropbox/buttonboard/images</string>
+		<string>/Users/tony/Dropbox/buttonboard/default</string>
+		<string>/Users/tony/Dropbox/buttonboard/imageresizer.py</string>
 	</array>
 	<key>Creator</key>
 	<string>Platypus-4.4</string>
@@ -20684,6 +20683,6 @@
 	<key>TextSize</key>
 	<real>10</real>
 	<key>Version</key>
-	<string>1.0</string>
+	<string>0.2</string>
 </dict>
 </plist>
