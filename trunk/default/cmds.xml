@@ -82,9 +82,8 @@ The list of commmands contains the following elements for each command:
 	</cmd>
 	<cmd name="restart_plex">
 		<label>(Re)Start Plex</label>
-		<exec>restart_app.sh
+		<exec>restart_app.sh</exec>
 			<param>Plex</param>
-		</exec>
 		<icon>plex.png</icon>
 		<badge>restart-silver.png</badge>
 		<confirm>true</confirm>
