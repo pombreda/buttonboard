@@ -1,15 +1,7 @@
 //----------------------------------------
 //Set up a request object to use to launch commands
 var http_cmd = false;
-
-if(navigator.appName == "Microsoft Internet Explorer") 
-{
-	http_cmd = new ActiveXObject("Microsoft.XMLHTTP");
-} 
-else 
-{
-	http_cmd = new XMLHttpRequest();
-}
+http_cmd = new XMLHttpRequest();
 
 
 function run_cmd(cmd, conf, output) 
@@ -32,11 +24,21 @@ function run_cmd(cmd, conf, output)
 	
 		launcher_stat.style.pixelTop = myTop;
 		launcher_stat.style.pixelLeft = myLeft;
+        launcher_stat.style.top = myTop+"px";  //for mozilla
+        launcher_stat.style.left = myLeft+"px";  //for mozilla
 		launcher_stat.innerHTML="<img src=\"images/loading2.gif\" alt=\"Loading\"/>";
 				
 		try
 		{
-			http_cmd.open("GET", "/cmd/"+cmd, true);
+			if(navigator.appName == "Microsoft Internet Explorer") 
+			{
+				//add a random (more or less) string to prevent the over-agressive caching of IE
+				http_cmd.open("GET", "/cmd/"+cmd+"?foo="+new Date().getTime(), true);
+			}
+			else
+			{
+				http_cmd.open("GET", "/cmd/"+cmd, true);
+			}
 		}
 		catch (err)
 		{
