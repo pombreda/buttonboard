@@ -16,10 +16,13 @@ from tornado.options import define, options
 import urllib
 from elementtree.ElementTree import parse
 
-from imageresizer import Resizer
+try:
+	from imageresizer import Resizer
+except:
+	print("Couldn't import Resizer");	
 
 define("debug", default=False, help="debug mode", type=bool)
-define("appbundle", default=True, help="indicates if running in Mac OSX app bundle", type=bool)
+define("appbundle", default="auto", help="indicates if running in Mac OSX app bundle", type=str)
 define("working_folder", default=os.path.dirname(__file__), help="the folder to look for all the files", type=str)
 define("clean_install", default=False, help="erase non-user data from app support folder", type=bool)
 
@@ -31,6 +34,9 @@ def debug_print(*arguments):
 		for arg in arguments: 
 			print arg,
 		print
+		
+def str2bool(v):
+	return v.lower() in ["yes", "true", "t", "1"]
 		
 #========================================================
 class Application(tornado.web.Application):
@@ -52,17 +58,24 @@ class Application(tornado.web.Application):
 
 	settings_file = "user/settings.xml"
 
-
 	
 	def __init__(self):
 
-		if options.appbundle == True:
+		inbundle = False;
+		if options.appbundle == "auto":
+			#check if the path of this file is in an app bundle kind of path
+			if os.path.abspath(os.path.dirname(__file__)).find(".app/Contents/Resources") != -1:
+				inbundle = True;
+		else:
+			inbundle = str2bool(options.appbundle)
+		
+		if inbundle == True:
 			debug_print("Running as Mac OSX app bundle")
 			self.setup_mac_files()
 		
 		print("working_folder = " + self.working_folder)
-
-		#the working folder is knowin, just set up all the path strings now
+		
+		#the working folder is known, so set up all the path strings now
 
 		self.bb_folder_path = os.path.join(self.working_folder, self.bb_folder)
 
@@ -123,9 +136,13 @@ class Application(tornado.web.Application):
 		)
 		
 		#Resize images to better size for serving.  Preserves the originals
-		#Resizer(self.default_image_path, "originals").resize()
-		Resizer(self.custom_image_path, "originals").resize()
-		
+		try:
+			#Resizer(self.default_image_path, "originals").resize()
+			Resizer(self.custom_image_path, "originals").resize()
+		except:
+			print("Automatic resizing of source images not available!!");
+			print("You may want to manually resize your images down to 128x128 to speed page loads");
+	
 		tornado.web.Application.__init__(self, handlers, **settings)
 		sys.stdout.flush()
 #------------------------
@@ -226,6 +243,7 @@ class MainHandler(BaseHandler):
 				for item in items:
 					cmd_name = item.get("n")
 					elementHTML = ""
+					onclick = ""
 					#search in command list
 					for cmd in cmds:
 						if cmd_name == cmd.get("name"):
@@ -254,23 +272,25 @@ class MainHandler(BaseHandler):
 								else:
 									badge = None
 
+								onclick += " onclick=\"run_cmd('" 
+								onclick += cmd_name 
+								onclick += "','"
+								onclick += confirm
+								onclick += "','"
+								onclick += output
+								onclick += "')\" " 	
+
 								elementHTML += "\t\t\t<div class=\"imagescaler\">\n"
 								elementHTML += "\t\t\t\t<img class=\"layer\" src=\"" + icon + "\" />\n"
 								elementHTML += "\t\t\t\t<img class=\"layer\" src=\"images/mask2.png\" />\n"
 								if not badge == None:
 									elementHTML += "\t\t\t\t<img class=\"badge\" src=\"" + badge + "\" />\n"
 								
-									
-								elementHTML += "\t\t\t\t<a href=\"#\"><img class=\"layer\" src=\""
+								elementHTML += "\t\t\t\t<img class=\"layer\" src=\""
 								elementHTML += "/images/button_mask.png"
-								elementHTML += "\" onclick=\"run_cmd('" 
-								elementHTML += cmd_name 
-								elementHTML += "','"
-								elementHTML += confirm
-								elementHTML += "','"
-								elementHTML += output
-								elementHTML += "')\" /></a>\n" 	
+								elementHTML += "\"  />\n" 	
 								elementHTML += "\t\t\t</div>\n"
+
 							else:
 								tmp = cmd.find("label")
 								if not tmp == None and not tmp.text.strip() == "":
@@ -279,7 +299,7 @@ class MainHandler(BaseHandler):
 									label = cmd_name
 									
 								elementHTML = "\t\t\t" + label + "\n"
-					table +=  "\t\t<td>\n" + elementHTML + "\t\t</td>\n"			
+					table +=  "\t\t<td" + onclick +  ">\n" + elementHTML + "\t\t</td>\n"			
 				table +=  "\t</tr>\n"
 				
 		return table
