@@ -24,7 +24,7 @@ except:
 define("debug", default=False, help="debug mode", type=bool)
 define("appbundle", default="auto", help="indicates if running in Mac OSX app bundle", type=str)
 define("working_folder", default=os.path.dirname(__file__), help="the folder to look for all the files", type=str)
-define("clean_install", default=False, help="erase non-user data from app support folder", type=bool)
+define("clean_install", default=True, help="erase non-user data from app support folder", type=bool)
 
 
 
@@ -40,7 +40,7 @@ def str2bool(v):
 		
 #========================================================
 class Application(tornado.web.Application):
-	
+
 	password = "changeme"
 	port = 8888
 
@@ -191,14 +191,10 @@ class Application(tornado.web.Application):
 		if options.clean_install:
 			debug_print( "Clean install.  Removing all but user folder")
 			if os.path.isdir(self.working_folder):
-				list = glob.glob(self.working_folder + "/[a-t,v-z,A-Z]*")
-				for item in list:
-					debug_print ("Going to remove "+item)
-					if os.path.isdir(item):
-						shutil.rmtree(item)
-					else:
-						os.remove(item)
-					
+				shutil.rmtree(self.working_folder+"/bb")
+				shutil.rmtree(self.working_folder+"/static")
+				shutil.rmtree(self.working_folder+"/templates")
+				shutil.rmtree(self.working_folder+"/default")
 	
 		debug_print ("Copying files over from app bundle")
 		self.copyover("bb")
