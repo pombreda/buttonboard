@@ -16,6 +16,9 @@ from tornado.options import define, options
 import urllib
 from elementtree.ElementTree import parse
 
+# Slightly different import for ubuntu 10.04
+#from xml.etree.ElementTree import parse
+
 try:
 	from imageresizer import Resizer
 except:
