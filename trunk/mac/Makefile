@@ -1,4 +1,4 @@
-VERSION_STR="0.2.2"
+VERSION_STR="0.3.0"
 
 all: appbundle diskimage
 
@@ -24,6 +24,15 @@ diskimage:
 	#remove working files and folders
 	rm -rf ButtonBoard
 
+install:
+	hdiutil attach ./ButtonBoard-$(VERSION_STR).dmg
+	rm -rf /Applications/Buttonboard.app
+	cp -a /Volumes/ButtonBoard/ButtonBoard.app /Applications
+	hdiutil detach /Volumes/ButtonBoard
+	
+run:
+	open /Applications/ButtonBoard.app
+	
 clean:
 	rm -rf ButtonBoard.app ButtonBoard ButtonBoard*.dmg
 
