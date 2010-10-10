@@ -124,14 +124,6 @@ The list of commmands contains the following elements for each command:
 		<confirm>true</confirm>
 	</cmd>
 
-	<cmd name="update_comix">
-		<label>Update Comics</label>
-		<exec>update_comics_dropbox.sh</exec>
-		<icon>comics.png</icon>
-		<badge>dropbox.png</badge>
-		<output>true</output>
-	</cmd>
-		
  </cmds>
 
  
@@ -154,7 +146,8 @@ If any buttonrows are defined in the user version of this file, this will be ign
 <item n="restart_plex" />	<item n="fullscreen_plex" />		<item n="show_hide_plex" />		<item n="play_pause_plex" />
 </buttonrow>
 <buttonrow>
-<item n="restart_trans" />	<item n="update_comix" />			<item n="rescan_plex" />		<item n="blank" />
+<item n="restart_trans" />	<item n="rescan_plex" />			<item n="blank" />				<item n="blank">
+
 </buttonrow>
 </layout>
 
