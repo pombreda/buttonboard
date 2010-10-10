@@ -1,0 +1,64 @@
+==Mac OS X==
+
+===app_send_key.sh===
+Takes a app name and key as argument, and sends a character as a keystroke
+
+{{{
+#!/bin/bash
+
+#Takes up to 3 args:
+# App name
+# key to send
+# optional "using" 
+
+if [ "$3" != "" ]
+then
+    USING="using ($3)"
+else
+    USING=""
+fi
+echo using=$USING
+
+/usr/bin/osascript <<EOF
+
+tell application "$1"
+    activate
+    tell application "System Events" to keystroke $2 $USING
+end tell
+
+}}}
+
+
+command-line usage:
+{{{
+app_send_key.sh "Hulu Desktop" space
+app_send_key.sh "Hulu Desktop" \"f\" "command down"
+}}}
+
+Sample XML command usage:
+
+{{{
+
+    <cmd name="pause_hulu">
+        <label>Pause Hulu</label>
+        <exec>app_send_key.sh</exec>
+        <param>Hulu Desktop</param>
+        <param>space</param>
+        <icon>hulu.png</icon>
+        <badge>pause-red.png</badge>
+    </cmd>
+
+    <cmd name="toggle_fs_hulu">
+        <label>Hulu FS Toggle</label>
+        <exec>app_send_key.sh</exec>
+        <param>Hulu Desktop</param>
+        <param>"f"</param>
+        <param>command down</param>
+        <icon>hulu.png</icon>
+        <badge>square-red.png</badge>
+    </cmd>
+	
+}}}
+
+
+==Linux==
