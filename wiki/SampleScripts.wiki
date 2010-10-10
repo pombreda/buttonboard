@@ -1,7 +1,7 @@
 ==Mac OS X==
 
 ===app_send_key.sh===
-Takes a app name and key as argument, and sends a character as a keystroke
+Very generic AppleScript/Bash to send keystrokes to any app.  Takes a app name and key as argument, and sends a character as a keystroke
 
 {{{
 #!/bin/bash
