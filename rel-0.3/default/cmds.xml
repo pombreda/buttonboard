@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--  
+**************
+This is the default file to define commands, scripts and icons.  Use this a reference,
+modifying the version in the "user" folder
+**************
+
+
+The list of commmands contains the following elements for each command:
+
+	name:	A unique command name.  Required attribute.
+
+	label:	The label for the command shown below the icon.  If not defined, the 
+			name will be used.
+
+	exec:	The script or program to run on the server. Can possibly point to an 
+			absolute path on the system (i.e. "/bin/ls").  If not absolute path name,
+			it will be searched for first in "user/scripts", then "default/scripts"
+
+	param:  There can be zero or more or parameters for the script or program.
+
+	icon:	The icon to display.  If not specified, a default "button" icon will be used.
+			The filename given will first be searched for in "user/images" and then in
+			"default/images".  Icons are best if square and size of 128x128 or greater
+
+	badge:	The badge is second icon to be displayed in the lower right corner of the main
+			icon.  Optional. Filename search is same as icon
+
+	confirm: True if a confirmation dialog is needed.  Default is false if not defined.
+	
+	output:	True to display command execution output in a dialog box.  Default is false 
+			if not defined.
+
+-->
+
+<bbdata>
+
+
+<cmds>
+	<cmd name="tv_power">
+		<label>TV Power</label>
+		<exec>tv_power.sh</exec>
+		<icon>tv.png</icon>
+		<badge>power-red.png</badge>
+	</cmd>
+	<cmd name="stereo_power">
+		<label>Stereo Power</label>
+		<exec>stereo_power.sh</exec>
+		<icon>stereo.png</icon>
+		<badge>power-red.png</badge>
+	</cmd>
+	<cmd name="stereo_vol_up">
+		<label>Vol +</label>
+		<exec>stereo_vol_up.sh</exec>
+		<icon>up-red.png</icon>
+	</cmd>
+	<cmd name="stereo_vol_down">
+		<label>Vol -</label>
+		<exec>stereo_vol_down.sh</exec>
+		<icon>down-red.png</icon>
+	</cmd>
+	<cmd name="restart_itunes">
+		<label>(Re)Start iTunes</label>
+		<exec>restart_app.sh</exec>	
+			<param>iTunes</param>
+		<icon>itunes.png</icon>
+		<badge>restart-silver.png</badge>
+		<confirm>true</confirm>
+	</cmd>
+	<cmd name="random_album_itunes">
+		<label>Random Album</label>
+		<exec>itunes_random_album.as</exec>
+		<icon>itunes.png</icon>
+		<badge>shuffle-red.png</badge>
+	</cmd>
+	<cmd name="play_pause_itunes">
+		<label>Play/Pause</label>
+		<exec>itunes_play_pause.as</exec>
+		<icon>itunes.png</icon>
+		<badge>pause-red.png</badge>
+	</cmd>
+	<cmd name="restart_plex">
+		<label>(Re)Start Plex</label>
+		<exec>restart_app.sh</exec>
+			<param>Plex</param>
+		<icon>plex.png</icon>
+		<badge>restart-silver.png</badge>
+		<confirm>true</confirm>
+	</cmd>
+	<cmd name="fullscreen_plex">
+		<label>Plex FS Toggle</label>
+		<exec>plex_fullscreen.sh</exec>
+		<icon>plex.png</icon>
+		<badge>square-red.png</badge>
+	</cmd>
+	<cmd name="show_hide_plex">
+		<label>Show/Hide Plex</label>
+		<exec>show_hide_app.sh</exec>
+			<param>Plex</param>
+		<icon>plex.png</icon>
+		<badge>updown-red.png</badge>
+	</cmd>
+	<cmd name="rescan_plex">
+		<label>Rescan Plex Media</label>
+		<exec>rescan_plex.sh</exec>
+		<icon>pms.png</icon>
+		<badge>refresh-red.png</badge>
+		<confirm>true</confirm>
+	</cmd>
+	<cmd name="play_pause_plex">
+		<label>Play/Pause</label>
+		<exec>plex_play_pause.sh</exec>
+		<icon>plex.png</icon>
+		<badge>pause-red.png</badge>
+	</cmd>
+
+	<cmd name="restart_trans">
+		<label>(Re)Start Transmission</label>
+		<exec>restart_app.sh</exec>
+			<param>Transmission</param>
+		<icon>transmission.png</icon>
+		<badge>restart-silver.png</badge>
+		<confirm>true</confirm>
+	</cmd>
+
+ </cmds>
+
+ 
+<!-- 
+Since the buttons are layed out in lines of 4, they are grouped here that way for
+the sake of clarity.  Please note the use of the special reserved command, "blank", used
+as a space filler on the grid.
+
+If any buttonrows are defined in the user version of this file, this will be ignored.
+-->	
+
+<layout>
+<buttonrow>
+<item n="tv_power" />		<item n="stereo_power" />			<item n="blank" />				<item n="stereo_vol_up" />
+</buttonrow>
+<buttonrow>
+<item n="restart_itunes" />	<item n="random_album_itunes" />	<item n="play_pause_itunes" />	<item n="stereo_vol_down" />
+</buttonrow>
+<buttonrow>
+<item n="restart_plex" />	<item n="fullscreen_plex" />		<item n="show_hide_plex" />		<item n="play_pause_plex" />
+</buttonrow>
+<buttonrow>
+<item n="restart_trans" />	<item n="rescan_plex" />			<item n="blank" />				<item n="blank">
+
+</buttonrow>
+</layout>
+
+</bbdata>
+
+

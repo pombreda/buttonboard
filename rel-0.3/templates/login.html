@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>ButtonBoard Login</title>
+<!-- -->
+    <link rel="apple-touch-icon" href="/static/images/buttonboard.png"/>
+    <link rel="icon" href="/static/images/buttonboard.png" />    
+
+	<!-- -->
+	
+ <style type="text/css">
+body
+{
+	background-color: black;
+	color:white; 
+	border:none;
+	text-align:center; 
+	font-family: Arial, sans-serif;
+	font-size:20px; 
+	-webkit-text-size-adjust: none;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}	 
+
+input.big
+{
+	background-color: black; 
+	font-size: 30px;
+	font-weight: bold;
+	color: white;
+}
+</style>
+
+
+</link>
+	
+</head>
+
+<body>
+<div class="LoginArea">
+ButtonBoard
+<form action="/login" method="post">
+  {{ xsrf_form_html() }}
+  <input  type="hidden" name="next" value="{{next}}" />
+  <div><input class="big" type="password" name="password" size="15"/></div>
+  <br>
+  <input type="image" src="/static/images/buttonboard.png" value="Submit" alt="Login">
+</form>
+</div>
+</body>
+
+</html>
