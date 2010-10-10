@@ -146,8 +146,7 @@ If any buttonrows are defined in the user version of this file, this will be ign
 <item n="restart_plex" />	<item n="fullscreen_plex" />		<item n="show_hide_plex" />		<item n="play_pause_plex" />
 </buttonrow>
 <buttonrow>
-<item n="restart_trans" />	<item n="rescan_plex" />			<item n="blank" />				<item n="blank">
-
+<item n="restart_trans" />	<item n="rescan_plex" />			<item n="blank" />				<item n="blank"/>
 </buttonrow>
 </layout>
 
