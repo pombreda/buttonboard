@@ -104,7 +104,7 @@ If any buttonrows are defined in this file, this buttonrows in the default versi
 </buttonrow>
 
 <buttonrow>
-<item n="restart_trans" />	<item n="update_comix" />			<item n="rescan_plex" />		<item n="blank" />
+<item n="restart_trans" />	<item n="rescan_plex" />		<item n="blank" />
 </buttonrow>
 
 </layout>
