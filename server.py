@@ -134,6 +134,7 @@ class Application(tornado.web.Application):
 		
 		handlers = [
 			(r"/", MainHandler),
+			(r"/ButtonBoard.manifest", ManifestHandler),
 			(r"/cmd/([a-zA-Z0-9_]+)", CmdHandler),
 			(r"/login", LoginHandler),
 			(r"/bb/(.*)", ButtonBoardStaticFileHandler),
@@ -225,7 +226,7 @@ class Application(tornado.web.Application):
 
 #---------------------
 	def generate_cache_manifest(self, cmds, rows):
-		manifest = open(os.path.join(self.working_folder, "bb", "ButtonBoard.manifest"), "w")
+		manifest = open(os.path.join(self.working_folder, "ButtonBoard.manifest"), "w")
 
 		manifest.write("CACHE MANIFEST\n")
 		#manifest.write("/static/images/splash.png\n")
@@ -372,6 +373,15 @@ class MainHandler(BaseHandler):
 		return table
 
 #========================================================
+		
+class ManifestHandler(BaseHandler):
+
+	def get(self):
+		self.set_header("Content-Type", "text/cache-manifest")
+		manifest = open(os.path.join(self.application.working_folder, "ButtonBoard.manifest"), "r")
+		self.write(manifest.read())
+
+#========================================================
 class LoginHandler(BaseHandler):
 	def get(self):
 		if  len(self.get_arguments("next")) != 0:
@@ -460,12 +470,6 @@ class AuthStaticFileHandler(tornado.web.StaticFileHandler):
 #========================================================
 		
 class ButtonBoardStaticFileHandler(AuthStaticFileHandler):
-
-	@tornado.web.authenticated
-	def get(self, path):
-		if self.request.path == "/bb/ButtonBoard.manifest":
-			self.set_header("Content-Type", "text/cache-manifest")
-		tornado.web.StaticFileHandler.get(self, path)
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
