@@ -335,6 +335,12 @@ class MainHandler(BaseHandler):
 								else:
 									confirm = "false"
 
+								tmp = cmd.find("label")	
+								if not tmp == None:
+									label = tmp.text
+								else:
+									label = ""
+
 								tmp = cmd.find("icon")
 								if not tmp == None and not tmp.text.strip() == "":
 									icon = find_image(self.application.custom_image_path, self.application.default_image_path, tmp.text)
@@ -349,6 +355,8 @@ class MainHandler(BaseHandler):
 
 								onclick += " onclick=\"run_cmd('" 
 								onclick += cmd_name 
+								onclick += "','"
+								onclick += label 
 								onclick += "','"
 								onclick += confirm
 								onclick += "','"
