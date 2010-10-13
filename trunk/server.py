@@ -60,6 +60,7 @@ class Application(tornado.web.Application):
 
 	password = "changeme"
 	port = 8888
+	wakerurl = ""
 
 	# by default, working folder is where the script lives
 	working_folder = options.working_folder
@@ -188,6 +189,11 @@ class Application(tornado.web.Application):
 			except:
 				pass
 				
+			try: 
+				self.wakerurl = xml_data.find('wakerurl').text
+			except:
+				pass
+				
 		debug_print("The password = ", self.password)
 		print "Running on port: " , self.port
 	
@@ -269,6 +275,7 @@ class Application(tornado.web.Application):
 			
 		manifest.write("\n")
 		manifest.write("NETWORK:\n")
+		manifest.write("*\n")
 		manifest.write("/cmd\n")
 		manifest.write("# Generated: " + strftime("%a, %d %b %Y %H:%M:%S +0000", localtime()) + "\n")
 		manifest.close()
@@ -297,7 +304,7 @@ class MainHandler(BaseHandler):
 	@tornado.web.authenticated
 	def get(self):
 		table = self.html_grid()
-		self.render("index.html", table = table)
+		self.render("index.html", table = table, wakerurl=self.application.wakerurl)
 
 	def html_grid(self):
 		table = ""
