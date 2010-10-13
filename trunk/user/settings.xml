@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-
-
 <buttonboardsettings>
 
-  
-<port>8888</port>
-  
-<password>changeme</password>
-
+	<port>8888</port>
+	  
+	<password>changeme</password>
 
 </buttonboardsettings>
-
-
-
