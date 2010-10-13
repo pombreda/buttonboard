@@ -11,7 +11,6 @@ then
 else
 	USING=""
 fi
-echo using=$USING
 
 /usr/bin/osascript <<EOF
 
