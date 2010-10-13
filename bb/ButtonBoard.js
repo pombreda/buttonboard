@@ -4,9 +4,18 @@ var http_cmd = false;
 http_cmd = new XMLHttpRequest();
 
 
-function run_cmd(cmd, conf, output) 
+function run_cmd(cmd, label, conf, output) 
 {
-	if (conf != "true" || (conf == "true" && confirm("Are you sure?")))
+	if (label != "")
+	{
+		str = "Confirm:\n"+label;
+	}
+	else
+	{
+		str = "Are you sure?"
+	}
+
+	if (conf != "true" || (conf == "true" && confirm(str)))
 	{
 		launcher_stat = document.getElementById('launcher_stat');
 		launcher_stat.style.display='block';
