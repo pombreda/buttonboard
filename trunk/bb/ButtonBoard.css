@@ -98,14 +98,6 @@ img.badge
 
 .ButtonBoardArea img
 {
-
-/*	margin-left: 2px;
-	margin-right: 2px;
-
-padding-top: 10px;
-*/	
-
-
 	border:none;
 	-webkit-user-select:none;
 	-moz-user-select:none;
@@ -114,15 +106,20 @@ padding-top: 10px;
 
 #launcher_stat {
 	display:none;
-    /*set the div in the center of the screen*/
-    /*position:absolute;
-    top:50%;
-    left:50%;*/
-    position: absolute;
- 	font-size: 14px;
- 	font-weight: bold;
+	position: absolute;
+	font-size: 14px;
+	font-weight: bold;
 	width:150px;
 	height:150px;
 	z-index:6;
 
 } 
+
+/* for invisible element to call waker URL */
+ #waker {
+	display     : none;
+	visibility  : hidden;
+	height      : 1x;
+	width       : 1x;
+}
+
