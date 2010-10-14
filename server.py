@@ -218,10 +218,10 @@ class Application(tornado.web.Application):
 		if options.clean_install:
 			debug_print( "Clean install.  Removing all but user folder")
 			if os.path.isdir(self.working_folder):
-				shutil.rmtree(self.working_folder+"/bb")
-				shutil.rmtree(self.working_folder+"/static")
-				shutil.rmtree(self.working_folder+"/templates")
-				shutil.rmtree(self.working_folder+"/default")
+				shutil.rmtree(self.working_folder+"/bb", ignore_errors=True)
+				shutil.rmtree(self.working_folder+"/static", ignore_errors=True)
+				shutil.rmtree(self.working_folder+"/templates", ignore_errors=True)
+				shutil.rmtree(self.working_folder+"/default", ignore_errors=True)
 	
 		debug_print ("Copying files over from app bundle")
 		self.copyover("bb")

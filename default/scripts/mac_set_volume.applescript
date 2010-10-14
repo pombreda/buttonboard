@@ -4,11 +4,11 @@
 on run argv
 
 	if  item 1 of argv = "up" then
-		vol_up	
+		vol_up()	
 	else if  item 1 of argv = "down" then
-		vol_down	
+		vol_down()	
 	else if  item 1 of argv = "mute" then
-		vol_mute
+		vol_mute()
 	end if
 	
 end run
