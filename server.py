@@ -10,7 +10,6 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 from subprocess import *
-from time import localtime, strftime
 
 from tornado.options import define, options
 
@@ -33,10 +32,6 @@ define("clean_install", default=True, help="erase non-user data from app support
 
 
 #========================================================
-"""
-HELPER FUNCS
-"""
-
 def debug_print(*arguments):
 	if options.debug:
 		for arg in arguments: 
@@ -45,22 +40,12 @@ def debug_print(*arguments):
 		
 def str2bool(v):
 	return v.lower() in ["yes", "true", "t", "1"]
-	
-	
-def find_image(custom_path, default_path, name):
-	if os.path.exists(os.path.join(custom_path, name)):
-		return "/customimages/" + name
-	elif os.path.exists(os.path.join(default_path, name)):
-		return "/images/" + name
-	return "/images/buttonboard.png"
-	
 		
 #========================================================
 class Application(tornado.web.Application):
 
 	password = "changeme"
 	port = 8888
-	wakerurl = ""
 
 	# by default, working folder is where the script lives
 	working_folder = options.working_folder
@@ -135,7 +120,6 @@ class Application(tornado.web.Application):
 		
 		handlers = [
 			(r"/", MainHandler),
-			(r"/ButtonBoard.manifest", ManifestHandler),
 			(r"/cmd/([a-zA-Z0-9_]+)", CmdHandler),
 			(r"/login", LoginHandler),
 			(r"/bb/(.*)", ButtonBoardStaticFileHandler),
@@ -162,9 +146,6 @@ class Application(tornado.web.Application):
 			print("Automatic resizing of source images not available!!");
 			print("You may want to manually resize your images down to 128x128 to speed page loads");
 	
-	
-		self.generate_cache_manifest(xml_cmds, xml_rows)
-	
 		tornado.web.Application.__init__(self, handlers, **settings)
 		sys.stdout.flush()
 #------------------------
@@ -186,11 +167,6 @@ class Application(tornado.web.Application):
 
 			try: 
 				self.port = int(xml_data.find('port').text)
-			except:
-				pass
-				
-			try: 
-				self.wakerurl = xml_data.find('wakerurl').text
 			except:
 				pass
 				
@@ -218,10 +194,10 @@ class Application(tornado.web.Application):
 		if options.clean_install:
 			debug_print( "Clean install.  Removing all but user folder")
 			if os.path.isdir(self.working_folder):
-				shutil.rmtree(self.working_folder+"/bb", ignore_errors=True)
-				shutil.rmtree(self.working_folder+"/static", ignore_errors=True)
-				shutil.rmtree(self.working_folder+"/templates", ignore_errors=True)
-				shutil.rmtree(self.working_folder+"/default", ignore_errors=True)
+				shutil.rmtree(self.working_folder+"/bb")
+				shutil.rmtree(self.working_folder+"/static")
+				shutil.rmtree(self.working_folder+"/templates")
+				shutil.rmtree(self.working_folder+"/default")
 	
 		debug_print ("Copying files over from app bundle")
 		self.copyover("bb")
@@ -230,58 +206,6 @@ class Application(tornado.web.Application):
 		self.copyover("default")
 		self.copyover("user")
 
-#---------------------
-	def generate_cache_manifest(self, cmds, rows):
-		manifest = open(os.path.join(self.working_folder, "ButtonBoard.manifest"), "w")
-
-		manifest.write("CACHE MANIFEST\n")
-		#manifest.write("/static/images/splash.png\n")
-		manifest.write("/static/images/buttonboard.png\n")
-		manifest.write("/bb/ButtonBoard.js\n")
-		manifest.write("/bb/ButtonBoard.css\n")
-		manifest.write("/images/loading2.gif\n")
-		manifest.write("/images/button_mask.png\n")
-		manifest.write("/images/mask2.png\n")
-
-		#walk the XML to figure out which specific images to cache
-		filelist = []
-		for cmd in cmds:
-			# see if cmd is in the layout
-			for row in rows:
-				items = row.findall('item')			
-				for item in items:
-					layout_name = item.get("n")
-					cmd_name = cmd.get("name")
-					try: 
-						if cmd_name == layout_name:
-							# a match!  add icon and badge to list
-							icon = cmd.find("icon").text
-							if not icon == None:
-								icon = find_image(self.custom_image_path, self.default_image_path, icon)
-								filelist.append(icon)
-
-							badge = cmd.find("badge").text
-							if not badge == None:
-								badge = find_image(self.custom_image_path, self.default_image_path, badge)
-								filelist.append(badge)
-					except:
-						pass
-				
-		#Remove dupes
-		filelist = list(set(filelist))
-
-		for f in filelist:
-			manifest.write(f+"\n")
-			
-		manifest.write("\n")
-		manifest.write("NETWORK:\n")
-		manifest.write("*\n")
-		manifest.write("/cmd\n")
-		manifest.write("# Generated: " + strftime("%a, %d %b %Y %H:%M:%S +0000", localtime()) + "\n")
-		manifest.close()
-		
-		
-		
 #========================================================
 
 def custom_get_current_user(handler):
@@ -304,7 +228,7 @@ class MainHandler(BaseHandler):
 	@tornado.web.authenticated
 	def get(self):
 		table = self.html_grid()
-		self.render("index.html", table = table, wakerurl=self.application.wakerurl)
+		self.render("index.html", table = table)
 
 	def html_grid(self):
 		table = ""
@@ -335,28 +259,20 @@ class MainHandler(BaseHandler):
 								else:
 									confirm = "false"
 
-								tmp = cmd.find("label")	
-								if not tmp == None:
-									label = tmp.text
-								else:
-									label = ""
-
 								tmp = cmd.find("icon")
 								if not tmp == None and not tmp.text.strip() == "":
-									icon = find_image(self.application.custom_image_path, self.application.default_image_path, tmp.text)
+									icon = self.find_image(tmp.text)
 								else:
 									icon = "/images/buttonboard.png"
 
 								tmp = cmd.find("badge")
 								if not tmp == None and not tmp.text.strip() == "":
-									badge = find_image(self.application.custom_image_path, self.application.default_image_path, tmp.text)
+									badge = self.find_image(tmp.text)
 								else:
 									badge = None
 
 								onclick += " onclick=\"run_cmd('" 
 								onclick += cmd_name 
-								onclick += "','"
-								onclick += label 
 								onclick += "','"
 								onclick += confirm
 								onclick += "','"
@@ -387,14 +303,13 @@ class MainHandler(BaseHandler):
 				
 		return table
 
-#========================================================
-		
-class ManifestHandler(BaseHandler):
-
-	def get(self):
-		self.set_header("Content-Type", "text/cache-manifest")
-		manifest = open(os.path.join(self.application.working_folder, "ButtonBoard.manifest"), "r")
-		self.write(manifest.read())
+#------------------------
+	def find_image(self, name):
+		if os.path.exists(os.path.join(self.application.custom_image_path, name)):
+			return "customimages/" + name
+		elif os.path.exists(os.path.join(self.application.default_image_path, name)):
+			return "images/" + name
+		return "images/buttonboard.png"
 
 #========================================================
 class LoginHandler(BaseHandler):

@@ -38,27 +38,28 @@ The list of commmands contains the following elements for each command:
 
 
 <cmds>
-    <cmd name="mac_vol_up">
-        <label>Vol +</label>
-        <exec>mac_set_volume.applescript</exec>
-        <param>up</param>
-        <icon>up-red.png</icon>
-        <badge>speaker.png</badge>
-    </cmd>
-    <cmd name="mac_vol_down">
-        <label>Vol -</label>
-        <exec>mac_set_volume.applescript</exec>
-        <param>down</param>
-        <icon>down-red.png</icon>
-        <badge>speaker.png</badge>
-    </cmd>
-    <cmd name="mac_vol_mute">
-        <label>Mute</label>
-        <exec>mac_set_volume.applescript</exec>
-        <param>mute</param>
-        <icon>no-red.png</icon>
-        <badge>speaker.png</badge>
-    </cmd>
+	<cmd name="tv_power">
+		<label>TV Power</label>
+		<exec>tv_power.sh</exec>
+		<icon>tv.png</icon>
+		<badge>power-red.png</badge>
+	</cmd>
+	<cmd name="stereo_power">
+		<label>Stereo Power</label>
+		<exec>stereo_power.sh</exec>
+		<icon>stereo.png</icon>
+		<badge>power-red.png</badge>
+	</cmd>
+	<cmd name="stereo_vol_up">
+		<label>Vol +</label>
+		<exec>stereo_vol_up.sh</exec>
+		<icon>up-red.png</icon>
+	</cmd>
+	<cmd name="stereo_vol_down">
+		<label>Vol -</label>
+		<exec>stereo_vol_down.sh</exec>
+		<icon>down-red.png</icon>
+	</cmd>
 	<cmd name="restart_itunes">
 		<label>(Re)Start iTunes</label>
 		<exec>restart_app.sh</exec>	
@@ -69,13 +70,13 @@ The list of commmands contains the following elements for each command:
 	</cmd>
 	<cmd name="random_album_itunes">
 		<label>Random Album</label>
-		<exec>itunes_random_album.applescript</exec>
+		<exec>itunes_random_album.as</exec>
 		<icon>itunes.png</icon>
 		<badge>shuffle-red.png</badge>
 	</cmd>
 	<cmd name="play_pause_itunes">
 		<label>Play/Pause</label>
-		<exec>itunes_play_pause.applescript</exec>
+		<exec>itunes_play_pause.as</exec>
 		<icon>itunes.png</icon>
 		<badge>pause-red.png</badge>
 	</cmd>
@@ -117,40 +118,13 @@ The list of commmands contains the following elements for each command:
 	<cmd name="restart_trans">
 		<label>(Re)Start Transmission</label>
 		<exec>restart_app.sh</exec>
-		<param>Transmission</param>
+			<param>Transmission</param>
 		<icon>transmission.png</icon>
 		<badge>restart-silver.png</badge>
 		<confirm>true</confirm>
 	</cmd>
 
-	<cmd name="restart_hulu">
-		<label>(Re)Start Hulu</label>
-		<exec>restart_app.sh</exec>
-		<param>Hulu Desktop</param>
-		<icon>hulu.png</icon>
-		<badge>restart-silver.png</badge>
-		<confirm>true</confirm>
-	</cmd>
-
-	<cmd name="pause_hulu">
-		<label>Pause Hulu</label>
-		<exec>app_send_key.sh</exec>
-		<param>Hulu Desktop</param>
-		<param>space</param>
-		<icon>hulu.png</icon>
-		<badge>pause-red.png</badge>
-	</cmd>
-
-	<cmd name="toggle_fs_hulu">
-		<label>Hulu FS Toggle</label>
-		<exec>app_send_key.sh</exec>
-		<param>Hulu Desktop</param>
-		<param>"f"</param>
-		<param>command down</param>
-		<icon>hulu.png</icon>
-		<badge>square-red.png</badge>
-	</cmd>
-</cmds>
+ </cmds>
 
  
 <!-- 
@@ -161,25 +135,19 @@ as a space filler on the grid.
 If any buttonrows are defined in the user version of this file, this will be ignored.
 -->	
 
-
 <layout>
-
 <buttonrow>
-<item n="restart_itunes" />	<item n="random_album_itunes" />	<item n="play_pause_itunes" />	<item n="mac_vol_up" />
+<item n="tv_power" />		<item n="stereo_power" />			<item n="blank" />				<item n="stereo_vol_up" />
 </buttonrow>
-
 <buttonrow>
-<item n="restart_hulu" />	<item n="toggle_fs_hulu" />			<item n="pause_hulu" />			<item n="mac_vol_down" />
+<item n="restart_itunes" />	<item n="random_album_itunes" />	<item n="play_pause_itunes" />	<item n="stereo_vol_down" />
 </buttonrow>
-
 <buttonrow>
-<item n="restart_trans" />	<item n="rescan_plex" />			<item n="blank" />				<item n="mac_vol_mute"/>
+<item n="restart_plex" />	<item n="fullscreen_plex" />		<item n="show_hide_plex" />		<item n="play_pause_plex" />
 </buttonrow>
-
 <buttonrow>
-<item n="restart_plex" />	<item n="show_hide_plex" />		<item n="play_pause_plex" />		<item n="blank" />
+<item n="restart_trans" />	<item n="rescan_plex" />			<item n="blank" />				<item n="blank"/>
 </buttonrow>
-
 </layout>
 
 </bbdata>

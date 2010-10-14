@@ -1,8 +1,6 @@
-VERSION_STR="0.4.0"
+VERSION_STR="0.3.1"
 
-build: appbundle diskimage
-
-test: clean build install run
+all: appbundle diskimage
 
 appbundle:
 	#Generate app bundle with platypus CL tool
@@ -33,8 +31,6 @@ install:
 	hdiutil detach /Volumes/ButtonBoard
 	
 run:
-	 - killall ButtonBoard
-	 - killall python
 	open /Applications/ButtonBoard.app
 	
 clean:
