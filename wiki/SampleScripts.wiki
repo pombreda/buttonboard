@@ -1,6 +1,6 @@
 =Examples=
 
-[ #app-send-key-sh  test]
+[ SampleScripts#app-send-key-sh  test]
 
 
 
