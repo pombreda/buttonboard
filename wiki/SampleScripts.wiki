@@ -1,6 +1,13 @@
+=Examples=
+
+[ #app-send-key-sh  test]
+
+
+
 =Mac OS X=
 
-==app_send_key.sh==
+
+==app-send-key-sh==
 Very generic AppleScript/Bash to send keystrokes to any app.  Takes a app name and key as argument, and sends a character as a keystroke
 
 {{{
@@ -62,11 +69,14 @@ Sample XML command usage:
 
 ==tv_power.sh==
 
-Example of a very specific script designed to turn on and off a Philips TV, using ribsu and the USB-UIRT device.  It just send a recorded IR sequence to the TV.
+Example of a very specific script designed to turn on and off a Philips TV, using ribsu and the USB-UIRT device.  It just sends a recorded IR sequence to the TV.
 
 {{{
 #!/bin/bash
-/bin/echo "0000 0074 0000 0015 005F 0020 0010 0020 0010 0010 0010 0010 0010 0020 0020 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0020 0010 0010 0020 0010 0010 0010 0BAB" | /usr/local/bin/ribsu
+/bin/echo "0000 0074 0000 0015 005F 0020 0010 0020 0010 0010 0010 \
+0010 0010 0020 0020 0010 0010 0010 0010 0010 0010 0010 0010 0010 \
+0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 0010 \
+0010 0020 0010 0010 0020 0010 0010 0010 0BAB" | /usr/local/bin/ribsu
 }}}
 
 A possible command entry in cmds.xml looks like this:
