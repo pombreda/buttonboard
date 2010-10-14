@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 
-<html manifest="/ButtonBoard.manifest">
+<html>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
 	<title>ButtonBoard</title>
-	<link rel="apple-touch-icon" href="/static/images/buttonboard.png">
-	<link rel="icon" href="/static/images/buttonboard.png" />	
-    <link rel="apple-touch-startup-image" href="static/images/splash.png" />
+	<link rel="apple-touch-icon" href="/images/buttonboard.png"/>
+	<link rel="icon" href="/images/buttonboard.png" />	
 	<script language="javascript" type="text/javascript" src="/bb/ButtonBoard.js"></script>
 	<link rel="stylesheet" type="text/css" href="/bb/ButtonBoard.css">
 
-	
-	
 </head>
-<body> 
-	
-	<img id="waker" src="{{ wakerurl }}"></img>
-	
-	<div class="ButtonBoardArea">
-	<div id="launcher_stat"></div>
-		<table>
 
-		{{ table }}
+<body > 
+ 
+<div class="ButtonBoardArea">
+<div id="launcher_stat"></div>
+<table>
 
-		</table>
-	</div>
+{{ table }}
 
+</table>
+</div>
 </body>
-
 </html>
 
