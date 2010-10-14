@@ -1,7 +1,7 @@
 =Examples=
 
 [ SampleScripts#app-send-key-sh  test]
-[ SampleScripts#tv-power-sh  test2]
+[ SampleScripts#tvpowersh ]
 
 
 
@@ -68,7 +68,7 @@ Sample XML command usage:
 	
 }}}
 
-==tv-power-sh==
+==tvpowersh==
 
 Example of a very specific script designed to turn on and off a Philips TV, using ribsu and the USB-UIRT device.  It just sends a recorded IR sequence to the TV.
 
