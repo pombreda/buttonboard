@@ -1,4 +1,4 @@
-VERSION_STR="0.3.2"
+VERSION_STR="0.4.0"
 
 build: appbundle diskimage
 
