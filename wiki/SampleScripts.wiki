@@ -5,7 +5,7 @@
 =Mac OS X=
 
 
-==app_send-key.sh==
+==app_send_key.sh==
 Very generic AppleScript/Bash to send keystrokes to any app.  Takes a app name and key as argument, and sends a character as a keystroke
 
 {{{
@@ -65,7 +65,7 @@ Sample XML command usage:
 	
 }}}
 
-==tv-power-sh==
+==tv_power.sh==
 
 Example of a very specific script designed to turn on and off a Philips TV, using ribsu and the USB-UIRT device.  It just sends a recorded IR sequence to the TV.
 
