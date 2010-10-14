@@ -40,21 +40,21 @@ The list of commmands contains the following elements for each command:
 <cmds>
     <cmd name="mac_vol_up">
         <label>Vol +</label>
-        <exec>mac_set_volume.sh</exec>
+        <exec>mac_set_volume.applescript</exec>
         <param>up</param>
         <icon>up-red.png</icon>
         <badge>speaker.png</badge>
     </cmd>
     <cmd name="mac_vol_down">
         <label>Vol -</label>
-        <exec>mac_set_volume.sh</exec>
+        <exec>mac_set_volume.applescript</exec>
         <param>down</param>
         <icon>down-red.png</icon>
         <badge>speaker.png</badge>
     </cmd>
     <cmd name="mac_vol_mute">
         <label>Mute</label>
-        <exec>mac_set_volume.sh</exec>
+        <exec>mac_set_volume.applescript</exec>
         <param>mute</param>
         <icon>no-red.png</icon>
         <badge>speaker.png</badge>
@@ -69,13 +69,13 @@ The list of commmands contains the following elements for each command:
 	</cmd>
 	<cmd name="random_album_itunes">
 		<label>Random Album</label>
-		<exec>itunes_random_album.as</exec>
+		<exec>itunes_random_album.applescript</exec>
 		<icon>itunes.png</icon>
 		<badge>shuffle-red.png</badge>
 	</cmd>
 	<cmd name="play_pause_itunes">
 		<label>Play/Pause</label>
-		<exec>itunes_play_pause.as</exec>
+		<exec>itunes_play_pause.applescript</exec>
 		<icon>itunes.png</icon>
 		<badge>pause-red.png</badge>
 	</cmd>
