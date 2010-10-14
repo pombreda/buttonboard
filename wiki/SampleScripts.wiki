@@ -1,7 +1,7 @@
 =Examples=
 
 [ SampleScripts#app-send-key-sh  test]
-[ SampleScripts#tvpowersh ]
+[SampleScripts#tvpowersh]
 
 
 
