@@ -7,7 +7,7 @@
 	<key>Authentication</key>
 	<false/>
 	<key>Author</key>
-	<string>Tony Beville</string>
+	<string>anville</string>
 	<key>BundledFiles</key>
 	<array>
 		<string>/Users/tony/Dropbox/buttonboard/bb</string>
@@ -20683,6 +20683,6 @@
 	<key>TextSize</key>
 	<real>10</real>
 	<key>Version</key>
-	<string>0.4.0</string>
+	<string>0.3</string>
 </dict>
 </plist>
