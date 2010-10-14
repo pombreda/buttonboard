@@ -1,16 +1,11 @@
-=Examples=
-
 <wiki:toc max_depth="3" />
-
-* [SampleScripts#app-send-key-sh  app_send_key.sh]
-* [SampleScripts#tv-power-sh tv_power.sh]
 
 
 
 =Mac OS X=
 
 
-==app-send-key-sh==
+==app_send-key.sh==
 Very generic AppleScript/Bash to send keystrokes to any app.  Takes a app name and key as argument, and sends a character as a keystroke
 
 {{{
