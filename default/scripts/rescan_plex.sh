@@ -1,2 +1,2 @@
 #!/bin/bash
-/Applications/Plex.app/Contents/Resources/Plex/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner -s
+/Users/tony/Library/Application\ Support/Plex/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner -s
