@@ -10,19 +10,19 @@
 	<string>Tony Beville</string>
 	<key>BundledFiles</key>
 	<array>
-		<string>/Users/tony/Dropbox/buttonboard/bb</string>
-		<string>/Users/tony/Dropbox/buttonboard/static</string>
-		<string>/Users/tony/Dropbox/buttonboard/templates</string>
-		<string>/Users/tony/Dropbox/buttonboard/user</string>
-		<string>/Users/tony/Dropbox/buttonboard/default</string>
-		<string>/Users/tony/Dropbox/buttonboard/imageresizer.py</string>
+		<string>../bb</string>
+		<string>../static</string>
+		<string>../templates</string>
+		<string>../user</string>
+		<string>../default</string>
+		<string>../imageresizer.py</string>
 	</array>
 	<key>Creator</key>
 	<string>Platypus-4.4</string>
 	<key>CustomIconPath</key>
 	<string>/usr/local/share/platypus/PlatypusDefault.icns</string>
 	<key>Destination</key>
-	<string>/Users/tony/Desktop/MyApp.app</string>
+	<string>~/Desktop/MyApp.app</string>
 	<key>DestinationOverride</key>
 	<false/>
 	<key>DevelopmentVersion</key>
@@ -20654,7 +20654,7 @@
 	<key>Role</key>
 	<string>Viewer</string>
 	<key>ScriptPath</key>
-	<string>/Users/tony/dropbox/buttonboard/server.py</string>
+	<string>../server.py</string>
 	<key>Secure</key>
 	<false/>
 	<key>ShowInDock</key>
