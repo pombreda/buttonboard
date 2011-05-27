@@ -30,7 +30,7 @@ define("appbundle", default="auto", help="indicates if running in Mac OSX app bu
 define("working_folder", default=os.path.dirname(__file__), help="the folder to look for all the files", type=str)
 define("clean_install", default=True, help="erase non-user data from app support folder", type=bool)
 
-
+print("Tornado Version = " + tornado.version)
 
 #========================================================
 """
@@ -295,11 +295,16 @@ def custom_get_current_user(handler):
 
 #========================================================
 class BaseHandler(tornado.web.RequestHandler):
+	def initialize(self):
+		pass
+
 	def get_current_user(self):
 		return custom_get_current_user(self)
 
 #========================================================
 class MainHandler(BaseHandler):
+	def initialize(self):
+		pass
 
 	@tornado.web.authenticated
 	def get(self):
@@ -390,6 +395,8 @@ class MainHandler(BaseHandler):
 #========================================================
 		
 class ManifestHandler(BaseHandler):
+	def initialize(self):
+		pass
 
 	def get(self):
 		self.set_header("Content-Type", "text/cache-manifest")
@@ -398,6 +405,9 @@ class ManifestHandler(BaseHandler):
 
 #========================================================
 class LoginHandler(BaseHandler):
+	def initialize(self):
+		pass
+
 	def get(self):
 		if  len(self.get_arguments("next")) != 0:
 			next=self.get_argument("next")
@@ -419,6 +429,9 @@ class LoginHandler(BaseHandler):
 
 #========================================================
 class CmdHandler(BaseHandler):
+	def initialize(self):
+		pass
+
 	@tornado.web.authenticated
 	def get(self, cmd):
 		status = "Done"
@@ -473,6 +486,8 @@ class CmdHandler(BaseHandler):
 #========================================================
 		
 class AuthStaticFileHandler(tornado.web.StaticFileHandler):
+	def initialize(self):
+		pass
 
 	@tornado.web.authenticated
 	def get(self, path):
@@ -485,6 +500,8 @@ class AuthStaticFileHandler(tornado.web.StaticFileHandler):
 #========================================================
 		
 class ButtonBoardStaticFileHandler(AuthStaticFileHandler):
+	def initialize(self):
+		pass
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
@@ -493,6 +510,8 @@ class ButtonBoardStaticFileHandler(AuthStaticFileHandler):
 #========================================================
 		
 class ImageStaticFileHandler(AuthStaticFileHandler):
+	def initialize(self):
+		pass
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
@@ -502,6 +521,8 @@ class ImageStaticFileHandler(AuthStaticFileHandler):
 #========================================================
 		
 class CustomImageStaticFileHandler(AuthStaticFileHandler):
+	def initialize(self):
+		pass
 
 	def __init__(self, application, request, **kwargs):
 		tornado.web.RequestHandler.__init__(self, application, request)
