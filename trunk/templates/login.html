@@ -42,7 +42,7 @@ input.big
 <div class="LoginArea">
 ButtonBoard
 <form action="/login" method="post">
-  {{ xsrf_form_html() }}
+  {% module xsrf_form_html() %}
   <input  type="hidden" name="next" value="{{next}}" />
   <div><input class="big" type="password" name="password" size="15"/></div>
   <br>
