@@ -480,9 +480,6 @@ class CmdHandler(BaseHandler):
 			return os.path.join(self.application.default_script_path, name)
 		return None 
 
-		
-
-
 #========================================================
 		
 class AuthStaticFileHandler(tornado.web.StaticFileHandler):
@@ -501,33 +498,19 @@ class AuthStaticFileHandler(tornado.web.StaticFileHandler):
 		
 class ButtonBoardStaticFileHandler(AuthStaticFileHandler):
 	def initialize(self):
-		pass
-
-	def __init__(self, application, request, **kwargs):
-		tornado.web.RequestHandler.__init__(self, application, request)
-		self.root = os.path.abspath(application.bb_folder_path)
+		self.root = os.path.abspath(self.application.bb_folder_path)
 
 #========================================================
 		
 class ImageStaticFileHandler(AuthStaticFileHandler):
 	def initialize(self):
-		pass
-
-	def __init__(self, application, request, **kwargs):
-		tornado.web.RequestHandler.__init__(self, application, request)
-		self.root = os.path.abspath(application.default_image_path)
-
+		self.root = os.path.abspath(self.application.default_image_path)
 
 #========================================================
 		
 class CustomImageStaticFileHandler(AuthStaticFileHandler):
 	def initialize(self):
-		pass
-
-	def __init__(self, application, request, **kwargs):
-		tornado.web.RequestHandler.__init__(self, application, request)
-		self.root = os.path.abspath(application.custom_image_path)
-
+		self.root = os.path.abspath(self.application.custom_image_path)
 
 #========================================================
 def main():
