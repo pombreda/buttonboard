@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import Image
+try:
+	import Image
+except:
+	from PIL import Image
 import os, glob
 import shutil
 #========================================================
@@ -27,7 +30,7 @@ class Resizer:
 		except:
 			im = None
 
-		if not im == None:
+		if not im is None:
 
 			#print im.format, im.size, im.mode
 
